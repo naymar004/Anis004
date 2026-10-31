@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RT Hub – Ressources Réseaux & Télécoms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f4fb;--surface:#fff;--ink:#141a3c;--muted:#5b6285;--line:#d9ddf0;
+  --accent:#ff5a1f;--accent-ink:#fff;--rack:#141a3c;--rack-ink:#e9ecff;
+  color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1030;--surface:#151a46;--ink:#eef0ff;--muted:#9aa2d6;--line:#262d66;
+  --accent:#ff7a45;--accent-ink:#1a0c05;--rack:#080b24;--rack-ink:#e9ecff;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1030;--surface:#151a46;--ink:#eef0ff;--muted:#9aa2d6;--line:#262d66;
+  --accent:#ff7a45;--accent-ink:#1a0c05;--rack:#080b24;--rack-ink:#e9ecff;color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Instrument Sans",system-ui,sans-serif;line-height:1.55}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.1;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header.top{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.25rem;text-decoration:none;display:flex;gap:8px;align-items:center}
+.logo i{width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%,transparent);animation:blink 1.6s steps(2) infinite}
+@keyframes blink{50%{opacity:.35}}
+.tbtn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;cursor:pointer}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;padding:34px 0 50px}
+.hero h1{font-size:clamp(2.3rem,5.5vw,4rem);font-weight:800;letter-spacing:-.02em}
+.hero p.lead{color:var(--muted);font-size:1.1rem;max-width:46ch;margin:16px 0 24px}
+.cta{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:600;padding:13px 22px;border-radius:12px;text-decoration:none}
+.term{background:var(--rack);color:var(--rack-ink);border-radius:16px;overflow:hidden;box-shadow:0 18px 40px -18px rgba(20,26,60,.5)}
+.term .bar{display:flex;gap:6px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.term .bar b{width:10px;height:10px;border-radius:50%;background:#4b5390}
+.term .bar b:first-child{background:#ff5a1f}
+.term pre{margin:0;padding:18px;font:13px/1.7 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;min-height:210px}
+.term .ok{color:#4fe3b3}.term .pr{color:#ff9a6e}
+.q{font-family:"Bricolage Grotesque",sans-serif;font-size:1.25rem;line-height:1.35;color:#fff;display:block;margin-top:8px}
+.qa{opacity:.7;font-size:.9rem}
+.nextq{margin:0 18px 18px;background:transparent;border:1px solid rgba(255,255,255,.25);color:var(--rack-ink);border-radius:8px;padding:6px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+
+/* modules = patch panel */
+section{padding:34px 0}
+.sh{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.sh h2{font-size:clamp(1.6rem,3.5vw,2.3rem)}
+.sh p{color:var(--muted);margin:6px 0 0}
+.panel{background:var(--rack);border-radius:18px;padding:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.port{--c:#fff;text-align:left;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--rack-ink);border-radius:12px;padding:16px;cursor:pointer;font:inherit;display:flex;flex-direction:column;gap:6px;position:relative;transition:background .2s,border-color .2s}
+.port:hover{background:rgba(255,255,255,.09)}
+.port[aria-pressed="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 18%,transparent)}
+.port .led{position:absolute;top:14px;right:14px;width:10px;height:10px;border-radius:50%;background:#434a86}
+.port[aria-pressed="true"] .led{background:var(--c);box-shadow:0 0 10px var(--c)}
+.port strong{font-family:"Bricolage Grotesque",sans-serif;font-size:1.25rem}
+.port span{font-size:.85rem;opacity:.75}
+.port em{font-style:normal;font-size:.8rem;color:var(--c)}
+
+/* filters + resources */
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.tools input{flex:1 1 220px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:12px 14px;font:inherit}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-size:.9rem;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.res{--c:var(--accent);background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:14px;padding:16px;text-decoration:none;display:flex;flex-direction:column;gap:6px;transition:transform .15s}
+.res:hover{transform:translateY(-2px)}
+.res small{color:var(--muted)}
+.res b{font-size:1.02rem}
+.tag{align-self:flex-start;font-size:.78rem;font-weight:600;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--c) 18%,var(--surface));color:var(--ink)}
+.empty{grid-column:1/-1;padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}
+
+/* motivation */
+.mot{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.mot blockquote{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.mot p{font-family:"Bricolage Grotesque",sans-serif;font-size:1.15rem;margin:0 0 10px;line-height:1.35}
+.mot cite{color:var(--muted);font-size:.88rem}
+.how{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;color:var(--muted)}
+.how code{background:var(--bg);padding:2px 6px;border-radius:6px;color:var(--ink)}
+footer{padding:30px 0 40px;color:var(--muted);text-align:center}
+@media(max-width:820px){.hero{grid-template-columns:1fr}.panel{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.panel{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#"><i></i>RT Hub</a>
+    <button class="tbtn" id="theme" type="button">Mode sombre / clair</button>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Tout ton cursus Réseaux &amp; Télécoms, au même endroit.</h1>
+      <p class="lead">Cours, TDs corrigés, examens, interros, vidéos YouTube et Drives partagés. Choisis ton module et révise.</p>
+      <a class="cta" href="#modules">Choisir un module</a>
+    </div>
+    <div class="term" aria-live="polite">
+      <div class="bar"><b></b><b></b><b></b></div>
+<pre><span class="pr">etudiant@rt:~$</span> ping motivation.local
+<span class="ok">64 bytes reçus : temps=1ms</span>
+<span class="pr">etudiant@rt:~$</span> cat message.txt
+<span class="q" id="hq"></span><span class="qa" id="ha"></span></pre>
+      <button class="nextq" id="nq" type="button">Nouveau message</button>
+    </div>
+  </div>
+
+  <section id="modules">
+    <div class="sh"><div><h2>Les modules</h2><p>Clique sur un port pour filtrer les ressources.</p></div></div>
+    <div class="panel" id="panel"></div>
+  </section>
+
+  <section id="res">
+    <div class="sh"><div><h2 id="rt">Toutes les ressources</h2><p id="rc"></p></div></div>
+    <div class="tools">
+      <input id="s" type="search" placeholder="Rechercher : VLAN, SIP, MQTT, buffer overflow…" aria-label="Rechercher une ressource">
+    </div>
+    <div class="chips" id="chips" style="margin-bottom:18px"></div>
+    <div class="list" id="list"></div>
+  </section>
+
+  <section>
+    <div class="sh"><div><h2>Garde le cap</h2><p>Quand le TP plante à 23h, relis ça.</p></div></div>
+    <div class="mot" id="mot"></div>
+  </section>
+
+  <section>
+    <div class="how">
+      <b style="color:var(--ink)">Ajouter tes propres liens :</b> dans le code, trouve la liste <code>RESSOURCES</code> et ajoute une ligne
+      <code>{m:"WEB", t:"Cours", n:"Titre", u:"https://lien", d:"détail"}</code>.
+      Types disponibles : Cours, TD, Solution, Examen, Interro, Vidéo, Drive.
+    </div>
+  </section>
+  <footer>Fait par des étudiants RT, pour les étudiants RT.</footer>
+</div>
+
+<script>
+const MODULES={
+  "WEB":{c:"#ff5a1f",d:"HTML, CSS, JS, PHP, bases de données"},
+  "VOIP":{c:"#14b8a6",d:"SIP, RTP, Asterisk, QoS"},
+  "IOT":{c:"#a78bfa",d:"Capteurs, MQTT, ESP32, LoRa"},
+  "RSF":{c:"#38bdf8",d:"Réseaux sans fil : Wi-Fi, 4G/5G, radio"},
+  "SÉCURITÉ":{c:"#f43f5e",d:"Cryptographie, pare-feu, pentest"},
+  "REVERSE ENGINEERING":{c:"#facc15",d:"Assembleur, désassemblage, analyse binaire"}
+};
+const TYPES=["Cours","TD","Solution","Examen","Interro","Vidéo","Drive"];
+
+// === MODIFIE ICI : remplace les "#" par tes vrais liens ===
+const RESSOURCES=[
+ {m:"WEB",t:"Cours",n:"HTML & CSS : les fondamentaux",u:"#",d:"PDF du cours complet"},
+ {m:"WEB",t:"TD",n:"TD 1 : formulaires et validation",u:"#",d:"Énoncé"},
+ {m:"WEB",t:"Solution",n:"Correction TD 1",u:"#",d:"Code commenté"},
+ {m:"WEB",t:"Vidéo",n:"JavaScript pour débutants",u:"https://www.youtube.com/",d:"Playlist YouTube"},
+ {m:"VOIP",t:"Cours",n:"Protocole SIP et RTP",u:"#",d:"Slides du cours"},
+ {m:"VOIP",t:"TD",n:"TD : installer Asterisk",u:"#",d:"Énoncé + captures"},
+ {m:"VOIP",t:"Examen",n:"Examen VoIP, session normale",u:"#",d:"Sujet + barème"},
+ {m:"VOIP",t:"Vidéo",n:"Configurer un PBX pas à pas",u:"https://www.youtube.com/",d:"Tutoriel vidéo"},
+ {m:"IOT",t:"Cours",n:"Introduction à l’IoT et MQTT",u:"#",d:"Cours + schémas"},
+ {m:"IOT",t:"TD",n:"TD : ESP32 et capteur DHT22",u:"#",d:"Énoncé"},
+ {m:"IOT",t:"Interro",n:"Interro 1 : protocoles IoT",u:"#",d:"Sujet corrigé"},
+ {m:"IOT",t:"Drive",n:"Dossier Drive IoT",u:"https://drive.google.com/",d:"Tous les fichiers du module"},
+ {m:"RSF",t:"Cours",n:"Propagation et bilan de liaison",u:"#",d:"Cours + formules"},
+ {m:"RSF",t:"Solution",n:"Corrigé TD bilan de liaison",u:"#",d:"Calculs détaillés"},
+ {m:"RSF",t:"Examen",n:"Examen RSF, rattrapage",u:"#",d:"Sujet"},
+ {m:"RSF",t:"Vidéo",n:"Wi-Fi, 4G et 5G expliqués",u:"https://www.youtube.com/",d:"Chaîne YouTube"},
+ {m:"SÉCURITÉ",t:"Cours",n:"Cryptographie : AES, RSA, hachage",u:"#",d:"Cours complet"},
+ {m:"SÉCURITÉ",t:"TD",n:"TD : règles de pare-feu iptables",u:"#",d:"Énoncé"},
+ {m:"SÉCURITÉ",t:"Interro",n:"Interro 2 : attaques réseau",u:"#",d:"Sujet corrigé"},
+ {m:"SÉCURITÉ",t:"Drive",n:"Drive Sécurité : CTF et outils",u:"https://drive.google.com/",d:"Ressources partagées"},
+ {m:"REVERSE ENGINEERING",t:"Cours",n:"Assembleur x86 : les bases",u:"#",d:"Registres, pile, appels"},
+ {m:"REVERSE ENGINEERING",t:"TD",n:"TD : analyser un crackme avec Ghidra",u:"#",d:"Énoncé + binaire"},
+ {m:"REVERSE ENGINEERING",t:"Solution",n:"Solution du crackme",u:"#",d:"Pas à pas"},
+ {m:"REVERSE ENGINEERING",t:"Vidéo",n:"Débuter avec Ghidra et x64dbg",u:"https://www.youtube.com/",d:"Tutoriel vidéo"}
+];
+
+const CITATIONS=[
+ ["Chaque expert a d’abord été un débutant.","Proverbe"],
+ ["Un réseau tombe en panne, un étudiant motivé ne tombe pas.","RT Hub"],
+ ["Ce n’est pas un bug, c’est une occasion d’apprendre.","Proverbe de dev"],
+ ["La discipline bat la motivation quand la motivation s’en va.","Proverbe"],
+ ["Le succès, c’est la somme de petits efforts répétés chaque jour.","Robert Collier"],
+ ["Si tu peux le rêver, tu peux le construire.","Proverbe"],
+ ["Un ping réussi vaut mieux que mille timeouts.","RT Hub"],
+ ["Les paquets perdus se retransmettent. Toi aussi, recommence.","RT Hub"],
+ ["Celui qui déplace une montagne commence par déplacer de petites pierres.","Confucius"]
+];
+
+const $=id=>document.getElementById(id);
+let mod=null,typ=null;
+
+// panneau de modules
+const panel=$("panel");
+Object.entries(MODULES).forEach(([k,v])=>{
+  const n=RESSOURCES.filter(r=>r.m===k).length;
+  const b=document.createElement("button");
+  b.className="port";b.type="button";b.setAttribute("aria-pressed","false");b.style.setProperty("--c",v.c);
+  b.innerHTML=`<i class="led"></i><strong>${k}</strong><span>${v.d}</span><em>${n} ressource${n>1?"s":""}</em>`;
+  b.onclick=()=>{mod=(mod===k?null:k);panel.querySelectorAll(".port").forEach(p=>p.setAttribute("aria-pressed",String(p.querySelector("strong").textContent===mod)));render();if(mod)$("res").scrollIntoView({behavior:"smooth"})};
+  panel.appendChild(b);
+});
+
+// puces de types
+const chips=$("chips");
+["Tout",...TYPES].forEach(t=>{
+  const c=document.createElement("button");
+  c.className="chip";c.type="button";c.textContent=t;c.setAttribute("aria-pressed",String(t==="Tout"));
+  c.onclick=()=>{typ=(t==="Tout"?null:t);chips.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",String(x.textContent===t)));render()};
+  chips.appendChild(c);
+});
+
+function render(){
+  const q=$("s").value.trim().toLowerCase();
+  const items=RESSOURCES.filter(r=>(!mod||r.m===mod)&&(!typ||r.t===typ)&&(!q||(r.n+" "+r.d+" "+r.m+" "+r.t).toLowerCase().includes(q)));
+  $("rt").textContent=mod?mod:"Toutes les ressources";
+  $("rc").textContent=items.length+" résultat"+(items.length>1?"s":"");
+  const L=$("list");L.innerHTML="";
+  if(!items.length){L.innerHTML='<div class="empty">Aucune ressource trouvée. Essaie un autre mot ou retire un filtre.</div>';return}
+  items.forEach(r=>{
+    const a=document.createElement("a");
+    a.className="res";a.href=r.u;a.target="_blank";a.rel="noopener";
+    a.style.setProperty("--c",MODULES[r.m].c);
+    a.innerHTML=`<span class="tag">${r.t}</span><b>${r.n}</b><small>${r.m} · ${r.d}</small>`;
+    L.appendChild(a);
+  });
+}
+$("s").addEventListener("input",render);
+
+// citations
+let qi=Math.floor(Math.random()*CITATIONS.length);
+function showQ(){const [t,a]=CITATIONS[qi];$("hq").textContent="« "+t+" »";$("ha").textContent="\n— "+a;qi=(qi+1)%CITATIONS.length}
+$("nq").onclick=showQ;showQ();
+CITATIONS.slice(0,4).forEach(([t,a])=>{
+  const b=document.createElement("blockquote");
+  b.innerHTML=`<p>« ${t} »</p><cite>${a}</cite>`;$("mot").appendChild(b);
+});
+
+// thème
+$("theme").onclick=()=>{
+  const r=document.documentElement,dark=getComputedStyle(r).colorScheme==="dark";
+  r.setAttribute("data-theme",dark?"light":"dark");
+};
+render();
+</script>
+</body>
+</html>
